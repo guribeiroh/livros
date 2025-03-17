@@ -23,6 +23,19 @@ export default function NotificacaoCarrinho() {
       setTotalItens(0);
     }
   }, [carrinho.itens]);
+  
+  // Fechar a notificação automaticamente após 6 segundos
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (itemAdicionadoRecentemente) {
+      timer = setTimeout(() => {
+        fecharNotificacao();
+      }, 6000); // 6 segundos
+    }
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [itemAdicionadoRecentemente, fecharNotificacao]);
 
   return (
     <AnimatePresence>
@@ -31,12 +44,17 @@ export default function NotificacaoCarrinho() {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
-          transition={{ type: "spring", damping: 20 }}
-          className="fixed top-24 right-4 z-50 max-w-sm w-full bg-white rounded-lg shadow-lg overflow-hidden"
+          transition={{ 
+            type: "spring", 
+            damping: 20,
+            opacity: { duration: 0.5 },
+            exit: { duration: 0.5 }
+          }}
+          className="fixed top-24 right-4 z-50 max-w-sm w-full bg-white rounded-lg shadow-lg overflow-hidden border border-primary-100"
         >
           <div className="relative">
             {/* Barra de progresso para indicar que a notificação irá desaparecer */}
-            <div className="absolute bottom-0 left-0 h-1 bg-primary-600 animate-progress"></div>
+            <div className="absolute bottom-0 left-0 h-1 bg-primary-600 animate-progress-6s"></div>
             
             {/* Botão de fechar */}
             <button 

@@ -4,10 +4,12 @@ import "./globals.css";
 import { CarrinhoProvider } from "./context/CarrinhoContext";
 import { AuthProvider } from "./context/AuthContext";
 import { ToastProvider } from "./context/ToastContext";
+import CartProvider from "./context/CartContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import NotificacaoCarrinho from './components/NotificacaoCarrinho';
 import FloatingCartButton from './components/FloatingCartButton';
+import { Toaster } from 'react-hot-toast';
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -44,20 +46,45 @@ export default function RootLayout({
     <html lang="pt-BR" className={`${inter.variable} ${merriweather.variable} ${playfairDisplay.variable} scroll-smooth`} suppressHydrationWarning>
       <body className="bg-background text-primary-900 min-h-screen flex flex-col relative selection:bg-primary-200 selection:text-primary-900 overflow-x-hidden">
         <AuthProvider>
-          <CarrinhoProvider>
-            <ToastProvider>
-              {/* Efeito decorativo */}
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-500 via-accent-500 to-secondary-400 z-50"></div>
-              
-              <Navbar />
-              <NotificacaoCarrinho />
-              <main className="pt-20 flex-grow">
-                {children}
-              </main>
-              <Footer />
-              <FloatingCartButton />
-            </ToastProvider>
-          </CarrinhoProvider>
+          <CartProvider>
+            <CarrinhoProvider>
+              <ToastProvider>
+                {/* Efeito decorativo */}
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-500 via-accent-500 to-secondary-400 z-50"></div>
+                
+                <Navbar />
+                <NotificacaoCarrinho />
+                <main className="pt-20 flex-grow">
+                  {children}
+                </main>
+                <Footer />
+                <FloatingCartButton />
+                <Toaster
+                  position="bottom-right"
+                  toastOptions={{
+                    duration: 3000,
+                    style: {
+                      background: '#fff',
+                      color: '#334155',
+                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                      borderRadius: '0.5rem',
+                      padding: '1rem',
+                    },
+                    success: {
+                      style: {
+                        borderLeft: '4px solid #10b981',
+                      },
+                    },
+                    error: {
+                      style: {
+                        borderLeft: '4px solid #ef4444',
+                      },
+                    },
+                  }}
+                />
+              </ToastProvider>
+            </CarrinhoProvider>
+          </CartProvider>
         </AuthProvider>
       </body>
     </html>

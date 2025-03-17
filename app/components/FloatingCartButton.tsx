@@ -2,17 +2,20 @@
 
 import { useState, useEffect } from 'react';
 import { useCarrinho } from '../context/CarrinhoContext';
+import { useCart } from '../context/CartContext';
 import Link from 'next/link';
 
 export default function FloatingCartButton() {
   const { carrinho } = useCarrinho();
+  const { itemCount } = useCart();
   const [isVisible, setIsVisible] = useState(true);
   const [isAnimating, setIsAnimating] = useState(false);
   const [totalItens, setTotalItens] = useState(0);
 
   // Atualiza a contagem de itens sempre que o carrinho mudar
   useEffect(() => {
-    const novoTotal = carrinho.itens.reduce((total, item) => total + item.quantidade, 0);
+    // Usar o valor do itemCount do CartContext (mais confiável)
+    const novoTotal = itemCount;
     
     // Se o total aumentou, adiciona uma animação
     if (novoTotal > totalItens && totalItens > 0) {
@@ -22,7 +25,7 @@ export default function FloatingCartButton() {
     }
     
     setTotalItens(novoTotal);
-  }, [carrinho.itens, totalItens]);
+  }, [itemCount, carrinho.itens]);
 
   // Esconde o botão quando estiver na página do carrinho
   useEffect(() => {

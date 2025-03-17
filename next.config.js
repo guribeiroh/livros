@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['qduusarnflecelfnvpok.supabase.co'],
+    domains: ['qduusarnflecelfnvpok.supabase.co', 'via.placeholder.com'],
     remotePatterns: [
       {
         protocol: 'https',

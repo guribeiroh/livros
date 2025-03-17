@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useCarrinho } from '../context/CarrinhoContext';
+import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -9,6 +10,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 
 export default function Navbar() {
   const { carrinho } = useCarrinho();
+  const { itemCount } = useCart();
   const { usuario, logout, isAdmin } = useAuth();
   const [menuAberto, setMenuAberto] = useState(false);
   const [carrinhoAberto, setCarrinhoAberto] = useState(false);
@@ -17,7 +19,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const totalItens = carrinho.itens.reduce((total, item) => total + item.quantidade, 0);
+  const totalItens = itemCount;
 
   useEffect(() => {
     const handleScroll = () => {

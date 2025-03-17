@@ -9,7 +9,7 @@ import Badge from './Badge';
 import Button from './Button';
 
 interface BookCardProps {
-  book: Book;
+  book: any; // Alterando para any para aceitar diferentes formatos de livros
   index?: number;
 }
 
@@ -17,6 +17,7 @@ export default function BookCard({ book, index = 0 }: BookCardProps) {
   const { adicionarItem } = useCarrinho();
   const [isHovered, setIsHovered] = useState(false);
   const [botaoAnimado, setBotaoAnimado] = useState(false);
+  const [imgError, setImgError] = useState(false);
   
   // Atraso de animação baseado no índice
   const animationDelay = `${index * 100}ms`;
@@ -29,17 +30,17 @@ export default function BookCard({ book, index = 0 }: BookCardProps) {
     const livroAdaptado = {
       id: book.id,
       titulo: book.title,
-      autor: book.author,
+      autor: book.author || book.autor,
       descricao: book.description || '',
-      preco: book.price,
+      preco: typeof book.price === 'number' ? book.price : 0,
       precoOriginal: book.original_price || undefined,
-      imagemUrl: book.cover_image || '',
-      disponivel: book.stock !== undefined && book.stock !== null && book.stock > 0 ? true : false,
+      imagemUrl: book.cover_image || book.cover_url || book.imageUrl || '',
+      disponivel: book.in_stock || (book.stock !== undefined && book.stock !== null && book.stock > 0) ? true : false,
       categoria: book.category?.name || '',
       paginas: book.pages || 0,
       isbn: book.isbn || '',
-      anoPublicacao: book.publication_year || new Date().getFullYear(),
-      slug: book.slug
+      anoPublicacao: book.publication_year || book.year || new Date().getFullYear(),
+      slug: book.slug || book.id
     };
     
     adicionarItem(livroAdaptado);
@@ -51,9 +52,26 @@ export default function BookCard({ book, index = 0 }: BookCardProps) {
     }, 600);
   };
   
+  // Normalizar links e propriedades
+  const bookSlug = book.slug || book.id;
+  const bookCover = book.cover_image || book.cover_url || book.imageUrl || 'https://via.placeholder.com/300x400?text=Sem+Imagem';
+  const bookTitle = book.title || "Livro";
+  const bookAuthor = book.author || book.autor || "Autor desconhecido";
+  const bookCategory = book.category?.name || 'Sem categoria';
+  const bookPages = book.pages || 0;
+  
   // Verificar se o livro está disponível
-  const isAvailable = book.stock !== undefined && book.stock !== null && book.stock > 0;
-  const categoryName = book.category?.name || 'Sem categoria';
+  const isAvailable = book.in_stock || (book.stock !== undefined && book.stock !== null && book.stock > 0);
+  
+  // Verificar se tem preço original maior
+  const hasDiscount = book.original_price && 
+                     typeof book.original_price === 'number' && 
+                     typeof book.price === 'number' && 
+                     book.original_price > book.price;
+  
+  const discountPercentage = hasDiscount 
+    ? Math.round((1 - book.price / book.original_price) * 100) 
+    : 0;
   
   return (
     <div 
@@ -64,23 +82,34 @@ export default function BookCard({ book, index = 0 }: BookCardProps) {
     >
       <div className="relative">
         {/* Ribbon de desconto */}
-        {book.original_price && book.original_price > book.price && 
-          Math.round((1 - book.price / book.original_price) * 100) > 0 && (
+        {hasDiscount && discountPercentage > 0 && (
           <div className="absolute top-0 right-0 z-10 bg-gradient-to-r from-accent-500 to-primary-500 text-white text-xs font-bold py-1 px-2 shadow-md">
-            {Math.round((1 - book.price / book.original_price) * 100)}% OFF
+            {discountPercentage}% OFF
           </div>
         )}
         
-        <Link href={`/produto/${book.slug}`} className="block">
+        <Link href={`/produto/${bookSlug}`} className="block">
           <div className="relative aspect-[5/8] w-full bg-primary-50 overflow-hidden">
-            <Image 
-              src={book.cover_image || "/images/book-placeholder.jpg"}
-              alt={book.title}
-              fill
-              style={{ objectFit: 'contain' }}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className={`transition-transform duration-700 ${isHovered ? 'scale-110' : 'scale-100'}`}
-            />
+            {!imgError ? (
+              <Image 
+                src={bookCover}
+                alt={bookTitle}
+                fill
+                style={{ objectFit: 'contain' }}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className={`transition-transform duration-700 ${isHovered ? 'scale-110' : 'scale-100'}`}
+                onError={() => setImgError(true)}
+              />
+            ) : (
+              <Image 
+                src="https://via.placeholder.com/300x400?text=Sem+Imagem"
+                alt={bookTitle}
+                fill
+                style={{ objectFit: 'contain' }}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="p-4"
+              />
+            )}
             
             {/* Overlay de hover */}
             <div className={`absolute inset-0 bg-black bg-opacity-20 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
@@ -105,31 +134,31 @@ export default function BookCard({ book, index = 0 }: BookCardProps) {
       
       <div className="card-body">
         <div className="mb-2">
-          <p className="text-xs text-primary-500 font-medium uppercase tracking-wider">{categoryName}</p>
+          <p className="text-xs text-primary-500 font-medium uppercase tracking-wider">{bookCategory}</p>
         </div>
         
-        <Link href={`/produto/${book.slug}`} className="block group">
+        <Link href={`/produto/${bookSlug}`} className="block group">
           <h3 className="heading-display text-lg text-primary-800 mb-1 line-clamp-2 group-hover:text-primary-600 transition-colors">
-            {book.title}
+            {bookTitle}
           </h3>
         </Link>
         
-        <p className="text-sm text-primary-600 mb-3 italic">{book.author}</p>
+        <p className="text-sm text-primary-600 mb-3 italic">{bookAuthor}</p>
         
         <div className="flex flex-wrap items-center justify-between mt-auto pt-3 border-t border-primary-100">
           <div>
             <div className="flex items-baseline">
               <span className="text-xl font-display font-bold text-primary-800">
-                R${book.price.toFixed(2)}
+                R${typeof book.price === 'number' ? book.price.toFixed(2) : '0.00'}
               </span>
-              {book.original_price && book.original_price > book.price && (
+              {hasDiscount && (
                 <span className="text-sm text-primary-400 line-through ml-2">
                   R${book.original_price.toFixed(2)}
                 </span>
               )}
             </div>
             <div className="text-xs text-primary-400 mt-1">
-              {book.pages || 0} páginas
+              {bookPages} páginas
             </div>
           </div>
           

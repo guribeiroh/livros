@@ -179,6 +179,25 @@ a:hover {
   }
 }
 
+@keyframes progress-6s {
+  0% {
+    width: 0%;
+  }
+  8.33% { /* 0.5s / 6s = 8.33% - espera a animação de entrada */
+    width: 0%;
+  }
+  91.67% { /* (6s - 0.5s) / 6s = 91.67% - começa a animação de saída */
+    width: 100%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-progress-6s {
+  animation: progress-6s 6s linear forwards;
+}
+
 /* Animações para produtos */
 .book-card-hover {
   @apply transition duration-500 transform-gpu;

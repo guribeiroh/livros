@@ -92,7 +92,7 @@ export default function CheckoutPage() {
     return isValid;
   };
 
-  const prosseguirParaUpsell = (e: React.FormEvent) => {
+  const prosseguirParaConfirmacao = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validarFormulario()) {
@@ -106,8 +106,8 @@ export default function CheckoutPage() {
       // Salvar os dados do cliente no localStorage para uso posterior
       localStorage.setItem('dadosCliente', JSON.stringify(formData));
       
-      // Redirecionar para a página de upsell
-      router.push('/checkout/upsell');
+      // Redirecionar diretamente para a página de confirmação
+      router.push('/checkout/confirmacao');
       
       setCarregando(false);
     }, 1000);
@@ -162,7 +162,7 @@ export default function CheckoutPage() {
         <div className="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold mb-4">Dados de Entrega</h2>
           
-          <form onSubmit={prosseguirParaUpsell}>
+          <form onSubmit={prosseguirParaConfirmacao}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div>
                 <label htmlFor="nome" className="block text-sm font-medium text-gray-700 mb-1">
