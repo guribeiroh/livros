@@ -128,8 +128,8 @@ INSERT INTO public.categories (name, description, slug) VALUES
 
 -- Inserir algumas configurações iniciais do site
 INSERT INTO public.site_settings (setting_key, setting_value) VALUES
-('site_name', 'Livraria JessyKaroline'),
-('contact_email', 'contato@livrariajessy.com'),
+('site_name', 'Livraria Adriana do Nascimento'),
+('contact_email', 'contato@livrariaadriana.com'),
 ('phone_number', '(11) 99999-9999'),
 ('shipping_fee', '15.00'),
 ('free_shipping_threshold', '150.00'),

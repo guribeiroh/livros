@@ -28,7 +28,7 @@ export default function SobrePage() {
               Nossa História
             </h1>
             <p className="text-lg md:text-xl opacity-90 animate-slide-up">
-              Conheça a trajetória, missão e valores da Livraria JessyKaroline
+              Conheça a trajetória, missão e valores da Livraria Adriana do Nascimento
             </p>
           </div>
         </div>
@@ -41,7 +41,7 @@ export default function SobrePage() {
             <div>
               <h2 className="text-3xl font-bold text-primary-800 mb-6">Como Tudo Começou</h2>
               <p className="text-primary-700 mb-4">
-                A Livraria JessyKaroline nasceu em 2015, fruto da paixão pela literatura de seus fundadores, Jessy e Karoline. 
+                A Livraria Adriana do Nascimento nasceu em 2015, fruto da paixão pela literatura de sua fundadora, Adriana do Nascimento. 
                 O que começou como uma pequena livraria física na região central da cidade, rapidamente se transformou em um 
                 espaço cultural de referência.
               </p>
@@ -59,7 +59,7 @@ export default function SobrePage() {
               <div className="rounded-lg overflow-hidden shadow-xl transform -rotate-2 hover:rotate-0 transition-transform duration-300">
                 <Image 
                   src="/images/sobre/livraria-fundacao.jpg" 
-                  alt="Fundação da Livraria JessyKaroline" 
+                  alt="Fundação da Livraria Adriana do Nascimento" 
                   width={600} 
                   height={400}
                   className="w-full h-auto object-cover"
@@ -169,16 +169,16 @@ export default function SobrePage() {
               <div className="relative h-80">
                 <Image 
                   src="/images/sobre/team-1.jpg" 
-                  alt="Jessy Santos" 
+                  alt="Adriana do Nascimento" 
                   fill
                   className="object-cover"
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold text-primary-800 mb-1">Jessy Santos</h3>
+                <h3 className="text-xl font-bold text-primary-800 mb-1">Adriana do Nascimento</h3>
                 <p className="text-primary-600 text-sm mb-3">Co-fundadora & CEO</p>
                 <p className="text-primary-700">
-                  Apaixonada por literatura clássica, Jessy lidera nossa equipe com criatividade e visão estratégica.
+                  Apaixonada por literatura clássica, Adriana lidera nossa equipe com criatividade e visão estratégica.
                 </p>
               </div>
             </div>

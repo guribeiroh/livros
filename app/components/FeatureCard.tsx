@@ -52,7 +52,7 @@ export function FeatureSection() {
     <section className="py-16 bg-primary-50 overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="heading-display text-3xl md:text-4xl text-primary-800 mb-4">Por que escolher a JessyKaroline?</h2>
+          <h2 className="heading-display text-3xl md:text-4xl text-primary-800 mb-4">Por que escolher a Adriana do Nascimento?</h2>
           <p className="text-primary-600 text-lg leading-relaxed">
             Oferecemos uma experiência de compra única para os amantes de literatura
           </p>

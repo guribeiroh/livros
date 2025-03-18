@@ -19,7 +19,7 @@ const testimonials: Testimonial[] = [
     name: 'Marina Silva',
     role: 'Professora',
     avatar: '/images/testimonials/avatar-1.jpg',
-    content: 'A Livraria JessyKaroline transformou minha experiência de compra de livros. A curadoria é impecável e sempre encontro exatamente o que procuro, além de descobrir novas joias literárias que nunca teria encontrado sozinha.',
+    content: 'A Livraria Adriana do Nascimento transformou minha experiência de compra de livros. A curadoria é impecável e sempre encontro exatamente o que procuro, além de descobrir novas joias literárias que nunca teria encontrado sozinha.',
     rating: 5
   },
   {
@@ -43,7 +43,7 @@ const testimonials: Testimonial[] = [
     name: 'Carlos Mendes',
     role: 'Escritor',
     avatar: '/images/testimonials/avatar-4.jpg',
-    content: 'Como escritor, valorizo muito o espaço que a Livraria JessyKaroline dá para autores nacionais. O cuidado com cada livro, desde a escolha até a embalagem para entrega, demonstra o amor pela literatura que permeia todo o negócio.',
+    content: 'Como escritor, valorizo muito o espaço que a Livraria Adriana do Nascimento dá para autores nacionais. O cuidado com cada livro, desde a escolha até a embalagem para entrega, demonstra o amor pela literatura que permeia todo o negócio.',
     rating: 5
   }
 ];
@@ -71,7 +71,7 @@ export default function Testimonials() {
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="heading-display text-3xl md:text-4xl text-primary-800 mb-4">O que nossos clientes dizem</h2>
           <p className="text-primary-600 text-lg leading-relaxed">
-            A opinião de quem já viveu a experiência JessyKaroline
+            A opinião de quem já viveu a experiência Adriana do Nascimento
           </p>
         </div>
         

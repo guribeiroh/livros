@@ -32,7 +32,7 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Livraria JessyKaroline | Sua Jornada Literária Começa Aqui",
+  title: "Livraria Adriana do Nascimento | Sua Jornada Literária Começa Aqui",
   description: "Descubra uma seleção cuidadosa dos melhores livros nacionais e internacionais, com curadoria para todos os gostos literários.",
   keywords: "livraria, livros, literatura, leitura, comprar livros, ebooks, livros online",
 };

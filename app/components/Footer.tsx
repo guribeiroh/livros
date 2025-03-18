@@ -2,11 +2,13 @@
 
 import Button from './Button';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function Footer() {
   const anoAtual = new Date().getFullYear();
   const [email, setEmail] = useState('');
+  const [showTooltip, setShowTooltip] = useState(false);
+  const tdxLogoRef = useRef<HTMLDivElement>(null);
   
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +35,7 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
             {/* Logo e informações */}
             <div className="md:col-span-4 animate-fade-in" style={{ animationDelay: '0ms' }}>
-              <h3 className="heading-display text-2xl text-primary-800 mb-6">Livraria JessyKaroline</h3>
+              <h3 className="heading-display text-2xl text-primary-800 mb-6">Livraria Adriana do Nascimento</h3>
               <p className="text-primary-700 leading-relaxed mb-6 opacity-90">
                 Sua jornada literária começa aqui. Descubra uma seleção cuidadosa dos melhores títulos nacionais e internacionais.
               </p>
@@ -165,12 +167,151 @@ export default function Footer() {
         </div>
       </div>
       
-      {/* Copyright */}
-      <div className="bg-primary-100 py-4 text-center text-primary-600 relative z-10">
+      {/* Copyright e Créditos */}
+      <div className="bg-[#f5f0e8] py-4 relative z-10">
         <div className="container mx-auto px-4">
-          <p className="text-sm">&copy; {anoAtual} Livraria JessyKaroline. Todos os direitos reservados.</p>
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center">
+            <p className="text-sm text-primary-700">&copy; {anoAtual} Livraria Adriana do Nascimento. Todos os direitos reservados.</p>
+            
+            {/* Agência TDX - Versão simplificada */}
+            <div 
+              ref={tdxLogoRef}
+              className="relative mt-3 md:mt-0"
+              onMouseEnter={() => setShowTooltip(true)}
+              onMouseLeave={() => setShowTooltip(false)}
+            >
+              <a 
+                href="https://agenciatdx.com.br" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <div className="relative overflow-hidden rounded-full bg-white shadow-md px-3 py-1.5 w-max mx-auto md:ml-auto md:mr-0">
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#ffeddf] via-[#f7e6df] to-[#f2d6c8] opacity-60"></div>
+                  <div className="flex items-center justify-center relative z-10">
+                    <span className="text-xs text-primary-700 mr-1.5">Orgulhosamente desenvolvido por</span>
+                    <span className="font-bold text-primary-900">TDX</span>
+                  </div>
+                </div>
+              </a>
+              <div className="text-[10px] text-center md:text-right text-primary-500 mt-1 opacity-70">
+                Clique para descobrir mais
+              </div>
+              
+              {/* Tooltip */}
+              {showTooltip && (
+                <div className="absolute -top-32 right-0 w-72 bg-white rounded-lg shadow-lg z-20 overflow-hidden">
+                  <div className="p-4">
+                    {/* Logo TDX */}
+                    <div className="flex justify-center mb-2">
+                      <div className="text-xl font-bold text-[#c9a887]">TDX</div>
+                    </div>
+                    
+                    {/* Conteúdo */}
+                    <p className="text-sm font-medium text-gray-800 mb-1 text-center">Agência TDX</p>
+                    <p className="text-xs text-gray-600 mb-3 text-center">
+                      Transformando ideias em experiências digitais extraordinárias
+                    </p>
+                    
+                    {/* Botão de ação */}
+                    <a 
+                      href="https://agenciatdx.com.br" 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="relative block w-full text-center text-xs font-medium text-white bg-[#6e573f] hover:bg-[#8a6a4f] hover:text-white px-3 py-2 rounded transition-all duration-300 overflow-hidden button-shine group"
+                    >
+                      <span className="relative z-10 font-bold tracking-wide text-shadow">Conheça nosso trabalho</span>
+                      <span className="absolute inset-0 overflow-hidden">
+                        <span className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-transparent via-white to-transparent shine-effect opacity-50"></span>
+                      </span>
+                      <span className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-white transition-opacity duration-300"></span>
+                      <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                        <span className="absolute inset-0 rounded glow-effect"></span>
+                      </span>
+                    </a>
+                  </div>
+                  
+                  <div className="absolute -bottom-2 right-6 w-4 h-4 rotate-45 bg-white"></div>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
+      
+      {/* Estilos personalizados */}
+      <style jsx global>{`
+        .shadow-soft {
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        @keyframes tooltipFade {
+          from {
+            opacity: 0;
+            transform: translateY(10px) scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+        
+        .animate-tooltip-fade {
+          animation: tooltipFade 0.2s ease-out forwards;
+        }
+        
+        /* Efeito de brilho percorrendo o botão */
+        @keyframes shine {
+          0% {
+            transform: translateX(-200%) skewX(45deg);
+          }
+          100% {
+            transform: translateX(300%) skewX(45deg);
+          }
+        }
+        
+        .shine-effect {
+          animation: shine 3s infinite;
+          animation-timing-function: ease-in-out;
+        }
+        
+        /* Efeito de brilho no hover */
+        @keyframes glow {
+          0% {
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.3);
+          }
+          70% {
+            box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+          }
+        }
+        
+        .glow-effect {
+          animation: glow 1.5s infinite;
+        }
+        
+        .button-shine {
+          position: relative;
+          transform: translateY(0);
+          box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+          transition: all 0.3s ease;
+        }
+        
+        .button-shine:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+        }
+        
+        .button-shine:active {
+          transform: translateY(1px);
+        }
+        
+        .text-shadow {
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+      `}</style>
     </footer>
   );
 }
